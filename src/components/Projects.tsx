@@ -138,7 +138,7 @@ export default function Projects() {
             <span className="heading-gradient">Five projects. One protocol.</span>
           </h2>
           <p className="mx-auto max-w-2xl text-cream/55">
-            A progressive tour of the Model Context Protocol, from the first
+            A progressive stack of the Model Context Protocol, from the first
             server to a cost-aware host that refuses to overspend.
           </p>
         </div>
