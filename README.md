@@ -4,7 +4,7 @@ A polished, dark-themed developer portfolio built with **Next.js 16**, **React 1
 
 ## Live preview
 
-- **Production:** https://ketanshukla-dev.vercel.app
+- **Production:** https://ketanshukla.dev
 - **Local:** `npm run dev` then open http://localhost:3000
 
 ## What’s inside

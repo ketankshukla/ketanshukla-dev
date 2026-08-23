@@ -2,7 +2,7 @@
 
 > **A 3-minute show-and-tell on vibe-coding the whole protocol stack**
 >
-> For the styled version with the dark/gold theme, large fonts, and slide layout, open `public/presentation.html` in a browser or visit `https://ketanshukla-dev.vercel.app/presentation.html` after deployment.
+> For the styled version with the dark/gold theme, large fonts, and slide layout, open `public/presentation.html` in a browser or visit `https://ketanshukla.dev/presentation.html` after deployment.
 
 ---
 

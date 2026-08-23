@@ -19,7 +19,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ketanshukla-dev.vercel.app"),
+  metadataBase: new URL("https://ketanshukla.dev"),
   title:
     "Ketan Shukla — MCP Developer & AI Systems Engineer",
   description:
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Ketan Shukla — MCP Developer & AI Systems Engineer",
     description:
       "End-to-end Model Context Protocol projects: servers, agent loops, approval gates, multi-agent crews, and cost-aware sampling hosts.",
-    url: "https://ketanshukla-dev.vercel.app",
+    url: "https://ketanshukla.dev",
     siteName: "Ketan Shukla",
     locale: "en_US",
     type: "website",
@@ -73,9 +73,9 @@ export default function RootLayout({
                 {
                   "@type": "Person",
                   name: "Ketan Shukla",
-                  url: "https://ketanshukla-dev.vercel.app",
+                  url: "https://ketanshukla.dev",
                   image:
-                    "https://ketanshukla-dev.vercel.app/images/ketan-shukla.jpeg",
+                    "https://ketanshukla.dev/images/ketan-shukla.jpeg",
                   jobTitle: "MCP Developer & AI Systems Engineer",
                   description:
                     "Developer of end-to-end Model Context Protocol systems, from first-party servers to agent loops, approval gates, multi-agent crews, and cost-aware sampling hosts.",
@@ -97,7 +97,7 @@ export default function RootLayout({
                 {
                   "@type": "WebSite",
                   name: "Ketan Shukla",
-                  url: "https://ketanshukla-dev.vercel.app",
+                  url: "https://ketanshukla.dev",
                 },
               ],
             }),
