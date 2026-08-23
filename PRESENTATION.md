@@ -1,280 +1,130 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+# From MCP Server to Cost-Aware Host
 
-  :root {
-    --bg: #050505;
-    --fg: #f5f0e8;
-    --gold: #d4a843;
-    --gold-light: #e8c36a;
-    --muted: #a3a3a3;
-    --surface: #0a0a0a;
-    --border: #27272a;
-  }
+> **A 3-minute show-and-tell on vibe-coding the whole protocol stack**
+>
+> For the styled version with the dark/gold theme, large fonts, and slide layout, open `public/presentation.html` in a browser or visit `https://ketanshukla-dev.vercel.app/presentation.html` after deployment.
 
-  * {
-    box-sizing: border-box;
-  }
+---
 
-  body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 22px;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
+## What is vibe coding?
 
-  .slide {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 4rem 6vw;
-    border-bottom: 1px solid var(--border);
-  }
+*The simplest version*
 
-  .slide h1,
-  .slide h2,
-  .slide h3 {
-    margin: 0 0 1rem 0;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
+- You describe what you want in plain English.
+- The AI writes the boilerplate, the tests, and the first draft.
+- You measure, correct, and keep the pieces that actually work.
+- The project grows one honest question at a time.
 
-  .slide h1 {
-    font-size: clamp(3rem, 6vw, 5rem);
-    color: var(--gold);
-  }
+It is not "let the AI do everything." It is **co-piloting with a very fast junior who never gets tired** — and checking every claim.
 
-  .slide h2 {
-    font-size: clamp(2.25rem, 5vw, 3.5rem);
-    color: var(--gold-light);
-  }
+---
 
-  .slide h3 {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    color: var(--fg);
-  }
+## What is MCP?
 
-  .slide p,
-  .slide li {
-    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-    color: var(--fg);
-    max-width: 44rem;
-  }
+*The USB-C for AI*
 
-  .slide p.subtitle {
-    color: var(--muted);
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
-    margin-bottom: 2rem;
-  }
+Before MCP, every AI app needed a custom integration for every service it talked to.
 
-  .slide ul {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0;
-  }
+With MCP, every app speaks the protocol once. Every service speaks the protocol once. They all plug together.
 
-  .slide li {
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-    position: relative;
-  }
+An AI can now **read files, roll dice, query a database, or ask another model to think** — through one agreed shape of message.
 
-  .slide li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 0.5rem;
-    height: 0.5rem;
-    background: var(--gold);
-    border-radius: 50%;
-  }
+---
 
-  .flow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 2rem 0;
-    max-width: 50rem;
-  }
+## The five layers I built
 
-  .box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    padding: 1rem 1.25rem;
-    font-size: clamp(1rem, 1.8vw, 1.35rem);
-    color: var(--fg);
-    min-width: 8rem;
-    text-align: center;
-  }
+*Each project is a working production system, deployed to Vercel*
 
-  .box strong {
-    display: block;
-    color: var(--gold);
-    font-size: 1.1em;
-    margin-bottom: 0.25rem;
-  }
+🍪 **1. Server** → offer tools
+🔁 **2. Host** → run the loop
+✋ **3. Guard** → ask first
+👥 **4. Crew** → delegate
+💸 **5. Ledger** → own the wallet
 
-  .arrow {
-    color: var(--gold);
-    font-size: 1.5rem;
-    align-self: center;
-  }
+Each one reuses the last. Nothing is theoretical — every repo has a live endpoint and a regression suite.
 
-  .gold {
-    color: var(--gold);
-  }
+---
 
-  .small {
-    font-size: 0.85em;
-    color: var(--muted);
-  }
+## Project 1 — The Server
 
-  a {
-    color: var(--gold);
-    text-decoration: none;
-  }
+*A vending machine for AI tools*
 
-  a:hover {
-    text-decoration: underline;
-  }
+- Built with Next.js, one file: `app/api/mcp/route.ts`.
+- Exposes tools, resources, and prompts using Zod schemas.
+- The AI reads the tool list and picks what it needs.
 
-  @media print {
-    .slide {
-      page-break-after: always;
-      border-bottom: none;
-    }
-  }
-</style>
+Takeaway: **MCP is just JSON-RPC with good descriptions.** The magic is the contract, not the code.
 
-<div class="slide">
-  <h1>From MCP Server to Cost-Aware Host</h1>
-  <p class="subtitle">A 3-minute show-and-tell on vibe-coding the whole protocol stack</p>
-  <p><strong>Ketan Shukla</strong> — <a href="https://ketanshukla-dev.vercel.app">ketanshukla-dev.vercel.app</a></p>
-</div>
+---
 
-<div class="slide">
-  <h2>What is vibe coding?</h2>
-  <p class="subtitle">The simplest version</p>
-  <ul>
-    <li>You describe what you want in plain English.</li>
-    <li>The AI writes the boilerplate, the tests, and the first draft.</li>
-    <li>You measure, correct, and keep the pieces that actually work.</li>
-    <li>The project grows one honest question at a time.</li>
-  </ul>
-  <p class="small">It is not "let the AI do everything." It is <span class="gold">co-piloting with a very fast junior who never gets tired</span> — and checking every claim.</p>
-</div>
+## Project 2 — The Host
 
-<div class="slide">
-  <h2>What is MCP?</h2>
-  <p class="subtitle">The USB-C for AI</p>
-  <p>Before MCP, every AI app needed a custom integration for every service it talked to.</p>
-  <p style="margin-top: 1.5rem;">With MCP, every app speaks the protocol once. Every service speaks the protocol once. They all plug together.</p>
-  <p style="margin-top: 1.5rem;" class="small">An AI can now <span class="gold">read files, roll dice, query a database, or ask another model to think</span> — through one agreed shape of message.</p>
-</div>
+*The other half of the conversation*
 
-<div class="slide">
-  <h2>The five layers I built</h2>
-  <p class="subtitle">Each project is a working production system, deployed to Vercel</p>
-  <div class="flow">
-    <div class="box"><strong>1. Server</strong>🍪 offer tools</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>2. Host</strong>🔁 run the loop</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>3. Guard</strong>✋ ask first</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>4. Crew</strong>👥 delegate</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>5. Ledger</strong>💸 own the wallet</div>
-  </div>
-  <p class="small">Each one reuses the last. Nothing is theoretical — every repo has a live endpoint and a regression suite.</p>
-</div>
+- The host reads a sentence, picks a tool, runs it, and loops.
+- It juggles multiple MCP servers without name collisions.
+- Added prompt caching and cut input token cost by ~47%.
 
-<div class="slide">
-  <h2>Project 1 — The Server</h2>
-  <p class="subtitle">A vending machine for AI tools</p>
-  <ul>
-    <li>Built with Next.js, one file: <code>app/api/mcp/route.ts</code>.</li>
-    <li>Exposes tools, resources, and prompts using Zod schemas.</li>
-    <li>The AI reads the tool list and picks what it needs.</li>
-  </ul>
-  <p class="small">Lesson: <span class="gold">MCP is just JSON-RPC with good descriptions.</span> The magic is the contract, not the code.</p>
-</div>
+This is what Claude Desktop and Cursor do under the hood. Now I had my own.
 
-<div class="slide">
-  <h2>Project 2 — The Host</h2>
-  <p class="subtitle">The other half of the conversation</p>
-  <ul>
-    <li>The host reads a sentence, picks a tool, runs it, and loops.</li>
-    <li>It juggles multiple MCP servers without name collisions.</li>
-    <li>Added prompt caching and cut input token cost by ~47%.</li>
-  </ul>
-  <p class="small">This is what Claude Desktop and Cursor do under the hood. Now I had my own.</p>
-</div>
+---
 
-<div class="slide">
-  <h2>Project 3 — The Guard</h2>
-  <p class="subtitle">Dangerous tools need a handbrake</p>
-  <ul>
-    <li>The host pauses before destructive actions and asks a human.</li>
-    <li>Conversations are persisted in Postgres, so a pause survives a refresh.</li>
-    <li>Evals and replay let me verify safety without guessing.</li>
-  </ul>
-  <p class="small">The key rule: <span class="gold">the host owns the allow-list, not the server.</span> You cannot trust a tool to tell you it is safe.</p>
-</div>
+## Project 3 — The Guard
 
-<div class="slide">
-  <h2>Project 4 — The Crew</h2>
-  <p class="subtitle">One agent hires help</p>
-  <ul>
-    <li>Added <code>spawn_agent</code> so the host can delegate a slice of work.</li>
-    <li>One approval queue covers the whole tree of sub-agents.</li>
-    <li>Measured the cost: on big jobs, the crew was correct and 0.56× the price.</li>
-  </ul>
-  <p class="small">A sub-agent is just a tool that happens to think.</p>
-</div>
+*Dangerous tools need a handbrake*
 
-<div class="slide">
-  <h2>Project 5 — The Ledger</h2>
-  <p class="subtitle">The host owns the wallet</p>
-  <ul>
-    <li>MCP "sampling" lets a server ask the host to run a model call.</li>
-    <li>The host estimates the cost first and refuses before spending.</li>
-    <li>Every allowed and refused draw is written to a ledger.</li>
-  </ul>
-  <p class="small">The most expensive thing a server can ask for now costs exactly the same as the cheapest: <span class="gold">$0.00, if the gate says no.</span></p>
-</div>
+- The host pauses before destructive actions and asks a human.
+- Conversations are persisted in Postgres, so a pause survives a refresh.
+- Evals and replay let me verify safety without guessing.
 
-<div class="slide">
-  <h2>How it all connects</h2>
-  <p class="subtitle">One pipeline from a single tool to a safe, cost-aware team</p>
-  <div class="flow">
-    <div class="box"><strong>See</strong><br/>tools + resources</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>Decide</strong><br/>agent loop</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>Ask</strong><br/>approval gate</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>Delegate</strong><br/>sub-agents</div>
-    <span class="arrow">→</span>
-    <div class="box"><strong>Refuse</strong><br/>spend ledger</div>
-  </div>
-  <p class="small">By the end, the host can see the world, choose what to do, ask a human, split the work, and refuse the bill.</p>
-</div>
+The key rule: **the host owns the allow-list, not the server.** You cannot trust a tool to tell you it is safe.
 
-<div class="slide">
-  <h2>Why this matters</h2>
-  <p class="subtitle">The job-market version</p>
-  <ul>
-    <li>I did not just read about MCP. I built the whole stack and shipped it.</li>
-    <li>Every project has a live URL, a GitHub repo, and a regression suite.</li>
-    <li>I can take an AI system from idea to deployed endpoint and keep it safe, observable, and cheap.</li>
-  </ul>
-  <p class="small">If you are building with AI agents, <span class="gold">this is the infrastructure you want on your team.</span></p>
-</div>
+---
+
+## Project 4 — The Crew
+
+*One agent hires help*
+
+- Added `spawn_agent` so the host can delegate a slice of work.
+- One approval queue covers the whole tree of sub-agents.
+- Measured the cost: on big jobs, the crew was correct and 0.56× the price.
+
+A sub-agent is just a tool that happens to think.
+
+---
+
+## Project 5 — The Ledger
+
+*The host owns the wallet*
+
+- MCP "sampling" lets a server ask the host to run a model call.
+- The host estimates the cost first and refuses before spending.
+- Every allowed and refused draw is written to a ledger.
+
+The most expensive thing a server can ask for now costs exactly the same as the cheapest: **$0.00, if the gate says no.**
+
+---
+
+## How it all connects
+
+*One pipeline from a single tool to a safe, cost-aware team*
+
+**See** → tools + resources
+**Decide** → agent loop
+**Ask** → approval gate
+**Delegate** → sub-agents
+**Refuse** → spend ledger
+
+By the end, the host can see the world, choose what to do, ask a human, split the work, and refuse the bill.
+
+---
+
+## Why this matters
+
+*The job-market version*
+
+- I did not just read about MCP. I built the whole stack and shipped it.
+- Every project has a live URL, a GitHub repo, and a regression suite.
+- I can take an AI system from idea to deployed endpoint and keep it safe, observable, and cheap.
+
+If you are building with AI agents, **this is the infrastructure you want on your team.**
