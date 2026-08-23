@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCP + RAG in Plain English</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050505;
+      --fg: #f5f0e8;
+      --gold: #d4a843;
+      --gold-light: #e8c36a;
+      --muted: #a3a3a3;
+      --surface: #0a0a0a;
+      --border: #27272a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 22px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 6vw;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .slide h1,
+    .slide h2,
+    .slide h3 {
+      margin: 0 0 1rem 0;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .slide h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: var(--gold);
+    }
+
+    .slide h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-light);
+    }
+
+    .slide h3 {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      color: var(--fg);
+    }
+
+    .slide p,
+    .slide li {
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      color: var(--fg);
+      max-width: 46rem;
+    }
+
+    .slide p.subtitle {
+      color: var(--muted);
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      margin-bottom: 2rem;
+    }
+
+    .slide ul {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+
+    .slide li {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .slide li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 0.5rem;
+      height: 0.5rem;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0;
+      max-width: 50rem;
+    }
+
+    .box p,
+    .box li {
+      color: var(--fg);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .small {
+      font-size: 0.9em;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      font-family: 'SF Mono', Menlo, Consolas, monospace;
+      background: rgba(255,255,255,0.08);
+      padding: 0.1rem 0.35rem;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+
+    @media print {
+      .slide {
+        page-break-after: always;
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slide">
+    <h1>MCP + RAG in Plain English</h1>
+    <p class="subtitle">One project. One story. No jargon.</p>
+    <p><strong>Ketan Shukla</strong> — <a href="https://ketanshukla.dev">ketanshukla.dev</a></p>
+  </div>
+
+  <div class="slide">
+    <h2>The problem</h2>
+    <p>You have a room full of documents — PDFs, notes, manuals, research papers — and you want to ask them questions like they are a person.</p>
+    <div class="box">
+      <p>“What does our refund policy say about international orders?”</p>
+      <p>“Which paper mentioned the 47% improvement?”</p>
+      <p>“Summarize the safety section of the user manual.”</p>
+    </div>
+    <p class="small">The AI by itself cannot open the filing cabinet. It can talk about documents in general, but it cannot look inside <strong>your</strong> documents.</p>
+  </div>
+
+  <div class="slide">
+    <h2>RAG — the smart librarian</h2>
+    <p class="subtitle">Forget the acronym. Think of a librarian.</p>
+    <ul>
+      <li><strong>Reads every book once.</strong> Documents are cut into small chunks.</li>
+      <li><strong>Turns each chunk into a number.</strong> Similar ideas get similar numbers.</li>
+      <li><strong>Stores the numbers in a vector database.</strong> A card catalog sorted by meaning, not title.</li>
+    </ul>
+    <p class="small">When you ask a question, it finds the chunks whose numbers are closest to your question and hands <strong>only those pages</strong> to the AI.</p>
+  </div>
+
+  <div class="slide">
+    <h2>MCP — the front desk</h2>
+    <p class="subtitle">The agreed way for the AI to ask the librarian</p>
+    <p>MCP lets the AI say:</p>
+    <div class="box">
+      <p>“Please run the <code>query_documents</code> tool with the question: <em>What is our refund policy?</em>”</p>
+    </div>
+    <p>And the RAG system replies:</p>
+    <div class="box">
+      <p>“Here are the three most relevant paragraphs.”</p>
+    </div>
+    <p class="small">Build the tool once, describe it once, and any MCP-speaking host can use it. It is <span class="gold">USB-C for AI</span>.</p>
+  </div>
+
+  <div class="slide">
+    <h2>How they work together</h2>
+    <p class="subtitle">The whole flow in one breath</p>
+    <ul>
+      <li>User asks a question.</li>
+      <li>The AI sees the <code>query_documents</code> tool.</li>
+      <li>The AI calls the tool.</li>
+      <li>The RAG system finds the right chunks.</li>
+      <li>The chunks go back to the AI.</li>
+      <li>The AI answers in plain English.</li>
+    </ul>
+    <p class="small">The AI never had to read the whole filing cabinet. It asked for the right pages and answered like an expert.</p>
+  </div>
+
+  <div class="slide">
+    <h2>What you would build</h2>
+    <p class="subtitle">A single Next.js project with one API route</p>
+    <ul>
+      <li><strong>Documents</strong> — PDFs, text files, or notes you upload.</li>
+      <li><strong>Chunker</strong> — splits documents into small pieces.</li>
+      <li><strong>Embedding model</strong> — turns chunks and questions into numbers.</li>
+      <li><strong>Vector database</strong> — finds the closest matches.</li>
+      <li><strong>MCP server</strong> — exposes a <code>query_documents</code> tool.</li>
+      <li><strong>Host / UI</strong> — where you type the question and see the answer.</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h2>The demo line that lands</h2>
+    <div class="box">
+      <p>“I built a tool that lets an AI ask my documents questions. The AI does not know my documents by heart. It asks a RAG librarian, gets the right pages, and answers like it read them just now.”</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <h2>Why this matters</h2>
+    <ul>
+      <li>It combines <span class="gold">retrieval, embeddings, and LLM orchestration</span>.</li>
+      <li>It is the architecture behind almost every AI assistant that reads private data.</li>
+      <li>Simple enough to explain in three minutes. Deep enough to impress a technical interviewer.</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h2>One-line recap</h2>
+    <div class="box">
+      <p><strong>RAG</strong> = show the AI only the pages that matter.</p>
+      <p><strong>MCP</strong> = the agreed way for the AI to ask for those pages.</p>
+      <p><strong>The project</strong> = one MCP server, one RAG librarian, endless documents that can finally be questioned.</p>
+    </div>
+  </div>
+
+</body>
+</html>
