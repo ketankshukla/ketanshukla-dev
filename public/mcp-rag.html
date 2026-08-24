@@ -34,18 +34,18 @@
     }
 
     .slide {
-      min-height: 100vh;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4rem 6vw;
+      padding: 2.5rem 6vw;
       border-bottom: 1px solid var(--border);
     }
 
     .slide h1,
     .slide h2,
     .slide h3 {
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.5rem 0;
       font-weight: 700;
       line-height: 1.1;
       letter-spacing: -0.02em;
@@ -71,23 +71,24 @@
       font-size: clamp(1.15rem, 2.2vw, 1.5rem);
       color: var(--fg);
       max-width: 46rem;
+      margin: 0 0 0.75rem;
     }
 
     .slide p.subtitle {
       color: var(--muted);
       font-size: clamp(1.1rem, 2vw, 1.4rem);
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
 
     .slide ul {
       list-style: none;
       padding: 0;
-      margin: 1.5rem 0;
+      margin: 1rem 0;
     }
 
     .slide li {
-      margin-bottom: 1rem;
-      padding-left: 1.5rem;
+      margin-bottom: 0.65rem;
+      padding-left: 1.25rem;
       position: relative;
     }
 
@@ -106,8 +107,8 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 1rem;
-      padding: 1.5rem 2rem;
-      margin: 1.5rem 0;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
       max-width: 50rem;
     }
 
